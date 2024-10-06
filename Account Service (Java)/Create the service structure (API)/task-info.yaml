@@ -12,6 +12,15 @@ files:
   - name: build.gradle
     visible: true
     learner_created: false
+  - name: src/account/controller/AuthController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/SignupModel.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/217/stages/1086/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 06 Oct 2024 18:14:04 UTC"
 record: -1
