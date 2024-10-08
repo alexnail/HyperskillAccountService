@@ -13,6 +13,39 @@ files:
   - name: test/AccountServiceTest.java
     visible: false
     learner_created: false
+  - name: src/account/repository/UserDAO.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/UserExistsException.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/UserModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/UserDetailsServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/UserMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/SecurityConfig.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/AuthController.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/User.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/SignupModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/RestAuthenticationEntryPoint.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/EmployeeController.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/217/stages/1088/implement#comment
 status: Unchecked
 record: -1

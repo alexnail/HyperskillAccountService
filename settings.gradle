@@ -27,6 +27,9 @@ rootProject.projectDir.eachDirRecurse {
         parts.add(sanitizeName(name.toString()))
     }
     def moduleName =  parts.join("-")
+    if (moduleName.endsWith("src")) {
+        return
+    }
     include "$moduleName"
     project(":$moduleName").projectDir = it
 }
