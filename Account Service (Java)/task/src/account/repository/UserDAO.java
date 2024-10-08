@@ -67,6 +67,15 @@ public class UserDAO implements InitializingBean {
         return entity;
     }
 
+    public int updatePassword(String email, String newPassword) {
+        String sql = """
+                UPDATE users
+                SET password = ?
+                WHERE email = ?
+                """;
+        return jdbcTemplate.update(sql, passwordEncoder.encode(newPassword), email.toLowerCase());
+    }
+
     @Override
     public void afterPropertiesSet() {
         String sql = """

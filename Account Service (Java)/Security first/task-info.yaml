@@ -46,6 +46,30 @@ files:
   - name: src/account/controller/EmployeeController.java
     visible: true
     learner_created: true
+  - name: src/account/model/ChangePasswordModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/CompromisedPasswordException.java
+    visible: true
+    learner_created: true
+  - name: src/resources/compromised_pwds.txt
+    visible: true
+    learner_created: true
+  - name: src/account/service/validator/PasswordValidator.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/handler/GlobalExceptionHandler.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/SamePasswordException.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/PasswordLengthException.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/217/stages/1088/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Tue, 08 Oct 2024 15:14:23 UTC"
 record: -1

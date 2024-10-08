@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class SignupModel {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -28,5 +30,6 @@ public class SignupModel {
 
     @NotEmpty
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@Length(min = 12)
     private String password;
 }
