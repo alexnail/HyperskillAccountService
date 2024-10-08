@@ -6,6 +6,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -26,6 +28,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().disable()) // For the H2 console
                 .authorizeHttpRequests(auth -> auth  // manage access
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/actuator/shutdown").permitAll()
                                 .anyRequest().authenticated()
                         // other matchers
                 )
@@ -34,5 +37,10 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

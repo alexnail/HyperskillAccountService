@@ -2,9 +2,11 @@ package account.repository;
 
 import account.entity.User;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class UserDAO implements InitializingBean {
 
     private final JdbcTemplate jdbcTemplate;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserDAO(JdbcTemplate jdbcTemplate) {
+    public UserDAO(JdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<User> findByUserName(String username) {
@@ -26,7 +30,7 @@ public class UserDAO implements InitializingBean {
                 WHERE email = ?
                 """;
         try {
-            User user = jdbcTemplate.queryForObject(sql, new Object[]{username}, (rs, rowNum) -> {
+            User user = jdbcTemplate.queryForObject(sql, new Object[]{username.toLowerCase()}, (rs, rowNum) -> {
                 User u = new User();
                 u.setId(rs.getLong("id"));
                 u.setEmail(rs.getString("email"));
@@ -36,7 +40,7 @@ public class UserDAO implements InitializingBean {
                 return u;
             });
             return Optional.ofNullable(user);
-        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
@@ -50,8 +54,8 @@ public class UserDAO implements InitializingBean {
 
         jdbcTemplate.update(conn -> {
             PreparedStatement ps = conn.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, entity.getEmail());
-            ps.setString(2, entity.getPassword());
+            ps.setString(1, entity.getEmail().toLowerCase());
+            ps.setString(2, passwordEncoder.encode(entity.getPassword()));
             ps.setString(3, entity.getName());
             ps.setString(4, entity.getLastname());
             return ps;
@@ -64,7 +68,7 @@ public class UserDAO implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTO_INCREMENT,

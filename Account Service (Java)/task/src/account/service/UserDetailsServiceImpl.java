@@ -38,4 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var saved = userDao.save(entity);
         return userMapper.toSignupModel(saved);
     }
+
+    public SignupModel getUserAsSignupModel(String username) {
+        User user = userDao.findByUserName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        return userMapper.toSignupModel(user);
+    }
 }
