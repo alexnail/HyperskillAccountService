@@ -9,6 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignupModel {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long id;
+
     @NotEmpty
     private String name;
 
