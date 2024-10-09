@@ -57,12 +57,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userMapper.toSignupModel(saved);
     }
 
-    public SignupModel getUserAsSignupModel(String username) {
-        User user = userRepository.findByEmailIgnoreCase(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-        return userMapper.toSignupModel(user);
-    }
-
     public ChangePasswordModel changePassword(ChangePasswordModel input) {
         validatePassword(input.getNewPassword());
         UserModel principal = (UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

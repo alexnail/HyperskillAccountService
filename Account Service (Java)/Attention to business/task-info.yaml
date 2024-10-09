@@ -12,9 +12,6 @@ files:
   - name: test/AccountServiceTest.java
     visible: false
     learner_created: false
-  - name: src/account/repository/UserDAO.java
-    visible: true
-    learner_created: true
   - name: src/account/exception/UserExistsException.java
     visible: true
     learner_created: true
@@ -69,6 +66,39 @@ files:
   - name: src/account/repository/UserRepository.java
     visible: true
     learner_created: true
+  - name: src/account/controller/AccountController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/PaymentInModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/PaymentsService.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/PaymentsServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/PaymentsRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/Payment.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/PaymentMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/PaymentOutModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/validation/ValidPeriod.java
+    visible: true
+    learner_created: true
+  - name: src/account/validation/PeriodValidator.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/217/stages/1089/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 09 Oct 2024 16:29:49 UTC"
 record: -1

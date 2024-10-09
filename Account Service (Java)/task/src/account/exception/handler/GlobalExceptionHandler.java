@@ -5,7 +5,9 @@ import account.exception.PasswordLengthException;
 import account.exception.SamePasswordException;
 import account.exception.UserExistsException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -50,6 +52,20 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
 
     @ExceptionHandler(SamePasswordException.class)
     public ResponseEntity handleSamePassword(HttpServletRequest request, SamePasswordException e) {
+        return new ResponseEntity<>(
+                getBodyMap(e.getMessage(), HttpStatus.BAD_REQUEST, request),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleConstraintViolation(HttpServletRequest request, ConstraintViolationException e) {
+        return new ResponseEntity<>(
+                getBodyMap(e.getMessage(), HttpStatus.BAD_REQUEST, request),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity handleDataIntegrityConstraintViolation(HttpServletRequest request, DataIntegrityViolationException e) {
         return new ResponseEntity<>(
                 getBodyMap(e.getMessage(), HttpStatus.BAD_REQUEST, request),
                 HttpStatus.BAD_REQUEST);

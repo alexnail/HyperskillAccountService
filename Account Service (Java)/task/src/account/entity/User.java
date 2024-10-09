@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -17,6 +19,11 @@ public class User {
 
     private String name;
     private String lastname;
+
+    @Column(unique = true)
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Payment> payments;
 }

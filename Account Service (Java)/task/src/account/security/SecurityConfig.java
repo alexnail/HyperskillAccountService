@@ -28,9 +28,10 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().disable()) // For the H2 console
                 .authorizeHttpRequests(auth -> auth  // manage access
                                 .requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/acct/payments").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/api/acct/payments").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/actuator/shutdown").permitAll()
                                 .anyRequest().authenticated()
-                        // other matchers
                 )
                 .sessionManagement(sessions -> sessions
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // no session
