@@ -4,6 +4,7 @@ import account.entity.User;
 import account.model.SignupModel;
 import account.model.UserModel;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,10 +17,10 @@ public class UserMapper {
                 .build();
     }
 
-    public User toEntity(SignupModel signupModel) {
+    public User toEntity(SignupModel signupModel, PasswordEncoder passwordEncoder) {
         User user = new User();
-        user.setEmail(signupModel.getEmail());
-        user.setPassword(signupModel.getPassword());
+        user.setEmail(signupModel.getEmail().toLowerCase());
+        user.setPassword(passwordEncoder.encode(signupModel.getPassword()));
         user.setName(signupModel.getName());
         user.setLastname(signupModel.getLastname());
         return user;

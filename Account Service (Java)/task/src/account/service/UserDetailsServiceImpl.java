@@ -9,13 +9,14 @@ import account.model.ChangePasswordModel;
 import account.model.SignupModel;
 import account.model.UserModel;
 import account.model.mapper.UserMapper;
-import account.repository.UserDAO;
+import account.repository.UserRepository;
 import account.service.validator.PasswordValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -24,37 +25,40 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserMapper userMapper;
 
-    private final UserDAO userDao;
+    private final UserRepository userRepository;
 
     private final PasswordValidator passwordValidator;
 
-    public UserDetailsServiceImpl(UserDAO userDao, UserMapper userMapper, PasswordValidator passwordValidator) {
-        this.userDao = userDao;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserDetailsServiceImpl(UserRepository userRepository, UserMapper userMapper,
+                                  PasswordValidator passwordValidator, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordValidator = passwordValidator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(username)
+        User user = userRepository.findByEmailIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         return userMapper.toUserModel(user);
     }
 
-
     public SignupModel createUser(SignupModel input) {
         validatePassword(input.getPassword());
 
-        if (userDao.findByUserName(input.getEmail()).isPresent()) {
+        if (userRepository.findByEmailIgnoreCase(input.getEmail()).isPresent()) {
             throw new UserExistsException("User exist!");
         }
-        var entity = userMapper.toEntity(input);
-        var saved = userDao.save(entity);
+        var entity = userMapper.toEntity(input, passwordEncoder);
+        var saved = userRepository.save(entity);
         return userMapper.toSignupModel(saved);
     }
 
     public SignupModel getUserAsSignupModel(String username) {
-        User user = userDao.findByUserName(username)
+        User user = userRepository.findByEmailIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         return userMapper.toSignupModel(user);
     }
@@ -65,12 +69,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (passwordValidator.isTheSamePassword(input.getNewPassword(), principal.getPassword())) {
             throw new SamePasswordException();
         }
-        var affectedRows = userDao.updatePassword(principal.getUsername(), input.getNewPassword());
-        if (1 != affectedRows) {
-            log.warn("Either less or more than one rows affected while changing password for user: {}, affectedRows: {}",
-                    input.getEmail(), affectedRows);
-        }
-        input.setEmail(principal.getUsername());
+
+        User user = userRepository.findByEmailIgnoreCase(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        user.setPassword(passwordEncoder.encode(input.getNewPassword()));
+        userRepository.save(user);
+
+        input.setEmail(user.getEmail());
         return input;
     }
 
