@@ -20,6 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -90,5 +93,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (passwordValidator.isCompromised(password)) {
             throw new CompromisedPasswordException();
         }
+    }
+
+    public List<SignupModel> getAllUsers() {
+        List<SignupModel> users = new ArrayList<>();
+        userRepository.findAll().forEach(user -> users.add(userMapper.toSignupModel(user)));
+        users.sort(Comparator.comparing(SignupModel::getId));
+        return users;
     }
 }
