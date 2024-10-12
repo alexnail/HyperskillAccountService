@@ -9,6 +9,7 @@ import account.model.ChangePasswordModel;
 import account.model.SignupModel;
 import account.model.UserModel;
 import account.model.mapper.UserMapper;
+import account.repository.GroupRepository;
 import account.repository.UserRepository;
 import account.service.validator.PasswordValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -31,12 +34,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final GroupRepository groupRepository;
+
     public UserDetailsServiceImpl(UserRepository userRepository, UserMapper userMapper,
-                                  PasswordValidator passwordValidator, PasswordEncoder passwordEncoder) {
+                                  PasswordValidator passwordValidator, PasswordEncoder passwordEncoder,
+                                  GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordValidator = passwordValidator;
         this.passwordEncoder = passwordEncoder;
+        this.groupRepository = groupRepository;
     }
 
     @Override
@@ -53,6 +60,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UserExistsException("User exist!");
         }
         var entity = userMapper.toEntity(input, passwordEncoder);
+        entity.setGroups(userRepository.count() == 0
+                ? Set.of(groupRepository.findByRole("ROLE_ADMINISTRATOR"))
+                : Set.of(groupRepository.findByRole("ROLE_USER")));
         var saved = userRepository.save(entity);
         return userMapper.toSignupModel(saved);
     }

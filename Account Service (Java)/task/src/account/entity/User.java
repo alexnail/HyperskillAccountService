@@ -26,4 +26,8 @@ public class User {
 
     @OneToMany(mappedBy = "employee")
     private Set<Payment> payments;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user2group")
+    private Set<Group> groups;
 }

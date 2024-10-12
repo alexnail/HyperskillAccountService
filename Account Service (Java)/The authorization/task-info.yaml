@@ -96,6 +96,15 @@ files:
   - name: src/account/controller/EmployeeController.java
     visible: true
     learner_created: true
+  - name: src/account/repository/GroupRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/Group.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/DataLoader.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/217/stages/1090/implement#comment
 status: Unchecked
 record: -1

@@ -1,11 +1,15 @@
 package account.model.mapper;
 
+import account.entity.Group;
 import account.entity.User;
 import account.model.SignupModel;
 import account.model.UserModel;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -14,6 +18,9 @@ public class UserMapper {
         return UserModel.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
+                .authorities(user.getGroups().stream()
+                        .map(g -> new SimpleGrantedAuthority(g.getRole()))
+                        .toList())
                 .build();
     }
 
@@ -32,6 +39,9 @@ public class UserMapper {
         signupModel.setEmail(saved.getEmail());
         signupModel.setName(saved.getName());
         signupModel.setLastname(saved.getLastname());
+        signupModel.setRoles(saved.getGroups().stream()
+                .map(Group::getRole)
+                .collect(Collectors.toSet()));
         return signupModel;
     }
 }
