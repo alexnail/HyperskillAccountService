@@ -20,10 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -100,5 +97,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userRepository.findAll().forEach(user -> users.add(userMapper.toSignupModel(user)));
         users.sort(Comparator.comparing(SignupModel::getId));
         return users;
+    }
+
+    public Map<String, Object> deleteUser(String email) {
+        var user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+
+        UserModel principal = (UserModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal.getUsername().equalsIgnoreCase(email)) {
+            throw new IllegalArgumentException("Can't remove ADMINISTRATOR role!");
+        }
+
+        userRepository.delete(user);
+
+        return Map.of("user", email,
+                "status", "Deleted successfully!");
     }
 }

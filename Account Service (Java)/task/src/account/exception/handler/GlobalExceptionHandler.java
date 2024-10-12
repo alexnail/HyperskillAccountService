@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,9 +29,9 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
                 HttpStatus.BAD_REQUEST);
     }
 
-    //@ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgument(HttpServletRequest request, IllegalArgumentException e) {
-        log.debug("Processing IllegalArgumentException: {}", e.getMessage());
+        //log.debug("Processing IllegalArgumentException: {}", e.getMessage());
         return new ResponseEntity<>(
                 getBodyMap(e.getMessage(), HttpStatus.BAD_REQUEST, request),
                 HttpStatus.BAD_REQUEST);
@@ -76,6 +77,13 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
         return new ResponseEntity<>(
                 getBodyMap("The password is in the hacker's database!", HttpStatus.BAD_REQUEST, request),
                 HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity handleUsernameNotFound(HttpServletRequest request, UsernameNotFoundException e) {
+        return new ResponseEntity<>(
+                getBodyMap(e.getMessage(), HttpStatus.NOT_FOUND, request),
+                HttpStatus.NOT_FOUND);
     }
 
     private static Map<String, Object> getBodyMap(String message, HttpStatus httpStatus, HttpServletRequest request) {

@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/acct/payments").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/api/acct/payments").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/actuator/shutdown").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/api/admin/user/*").hasRole("ADMINISTRATOR")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessions -> sessions

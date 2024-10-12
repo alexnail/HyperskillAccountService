@@ -2,11 +2,10 @@ package account.controller;
 
 import account.model.SignupModel;
 import account.service.UserDetailsServiceImpl;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -21,5 +20,10 @@ public class AdminController {
     @GetMapping("/user/")
     List<SignupModel> getUsers(){
         return userDetailsService.getAllUsers();
+    }
+
+    @DeleteMapping("/user/{email}")
+    Map<String, Object> deleteUser(@PathVariable("email") String email){
+        return userDetailsService.deleteUser(email);
     }
 }
