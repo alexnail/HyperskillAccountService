@@ -1,6 +1,7 @@
 package account.controller;
 
 import account.model.SignupModel;
+import account.model.UpdateRoleModel;
 import account.service.UserDetailsServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +26,10 @@ public class AdminController {
     @DeleteMapping("/user/{email}")
     Map<String, Object> deleteUser(@PathVariable("email") String email){
         return userDetailsService.deleteUser(email);
+    }
+
+    @PutMapping("/user/role")
+    SignupModel updateRole(@RequestBody UpdateRoleModel body){
+        return userDetailsService.updateRole(body);
     }
 }

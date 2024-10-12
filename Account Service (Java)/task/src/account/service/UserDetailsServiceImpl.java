@@ -1,17 +1,16 @@
 package account.service;
 
 import account.entity.User;
-import account.exception.CompromisedPasswordException;
-import account.exception.PasswordLengthException;
-import account.exception.SamePasswordException;
-import account.exception.UserExistsException;
+import account.exception.*;
 import account.model.ChangePasswordModel;
 import account.model.SignupModel;
+import account.model.UpdateRoleModel;
 import account.model.UserModel;
 import account.model.mapper.UserMapper;
 import account.repository.GroupRepository;
 import account.repository.UserRepository;
 import account.service.validator.PasswordValidator;
+import account.service.validator.RoleValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,23 +26,21 @@ import java.util.*;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserMapper userMapper;
-
     private final UserRepository userRepository;
-
     private final PasswordValidator passwordValidator;
-
     private final PasswordEncoder passwordEncoder;
-
     private final GroupRepository groupRepository;
+    private final RoleValidator roleValidator;
 
     public UserDetailsServiceImpl(UserRepository userRepository, UserMapper userMapper,
                                   PasswordValidator passwordValidator, PasswordEncoder passwordEncoder,
-                                  GroupRepository groupRepository) {
+                                  GroupRepository groupRepository, RoleValidator roleValidator) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordValidator = passwordValidator;
         this.passwordEncoder = passwordEncoder;
         this.groupRepository = groupRepository;
+        this.roleValidator = roleValidator;
     }
 
     @Override
@@ -112,5 +109,37 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return Map.of("user", email,
                 "status", "Deleted successfully!");
+    }
+
+    public SignupModel updateRole(UpdateRoleModel body) {
+        log.debug(">>> Updating role: {}", body);
+        var user = userRepository.findByEmailIgnoreCase(body.getUser())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        var group = groupRepository.findByRole("ROLE_" + body.getRole());
+        if (group == null) {
+            throw new RoleNotFoundException();
+        }
+
+        if ("REMOVE".equals(body.getOperation())) {
+            if (!user.getGroups().contains(group)) {
+                throw new IllegalArgumentException("The user does not have a role!");
+            }
+            if ("ROLE_ADMINISTRATOR".equals(group.getRole())) {
+                throw new IllegalArgumentException("Can't remove ADMINISTRATOR role!");
+            }
+            if (user.getGroups().size() == 1) {
+                throw new IllegalArgumentException("The user must have at least one role!");
+            }
+            user.getGroups().remove(group);
+        } else if ("GRANT".equals(body.getOperation())) {
+            if (roleValidator.isCombinedRole(user.getGroups(), group)) {
+                throw new IllegalArgumentException("The user cannot combine administrative and business roles!");
+            }
+            user.getGroups().add(group);
+        } else {
+            throw new IllegalArgumentException("Operation not supported!");
+        }
+        var saved = userRepository.save(user);
+        return userMapper.toSignupModel(saved);
     }
 }

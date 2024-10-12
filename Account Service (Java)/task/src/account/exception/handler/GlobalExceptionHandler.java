@@ -1,9 +1,6 @@
 package account.exception.handler;
 
-import account.exception.CompromisedPasswordException;
-import account.exception.PasswordLengthException;
-import account.exception.SamePasswordException;
-import account.exception.UserExistsException;
+import account.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -79,12 +76,19 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
                 HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity handleUsernameNotFound(HttpServletRequest request, UsernameNotFoundException e) {
+    @ExceptionHandler({UsernameNotFoundException.class, RoleNotFoundException.class})
+    public ResponseEntity handleUsernameNotFound(HttpServletRequest request, RuntimeException e) {
         return new ResponseEntity<>(
                 getBodyMap(e.getMessage(), HttpStatus.NOT_FOUND, request),
                 HttpStatus.NOT_FOUND);
     }
+
+    /*@ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity handleAccessDenied(HttpServletRequest request, AccessDeniedException e) {
+        return new ResponseEntity<>(
+                getBodyMap("Access Denied!", HttpStatus.FORBIDDEN, request),
+                HttpStatus.FORBIDDEN);
+    }*/
 
     private static Map<String, Object> getBodyMap(String message, HttpStatus httpStatus, HttpServletRequest request) {
         Map<String, Object> body = Map.of(
@@ -96,4 +100,6 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
         );
         return body;
     }
+
+
 }
