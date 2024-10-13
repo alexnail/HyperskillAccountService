@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,7 +42,7 @@ public class UserMapper {
         signupModel.setLastname(saved.getLastname());
         signupModel.setRoles(saved.getGroups().stream()
                 .map(Group::getRole)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toCollection(TreeSet::new))); // order is checked in tests
         return signupModel;
     }
 }
