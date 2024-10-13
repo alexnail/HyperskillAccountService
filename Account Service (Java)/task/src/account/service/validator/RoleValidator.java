@@ -9,7 +9,7 @@ import java.util.Set;
 @Component
 public class RoleValidator {
 
-    private static final Set<String> BUSINESS_ROLES = Set.of("ROLE_USER", "ROLE_ACCOUNTANT");
+    private static final Set<String> BUSINESS_ROLES = Set.of("ROLE_USER", "ROLE_ACCOUNTANT", "ROLE_AUDITOR");
     private static final Set<String> ADMINISTRATIVE_ROLES = Set.of("ROLE_ADMINISTRATOR");
 
     public boolean isCombinedRole(Set<Group> groups, Group group) {
