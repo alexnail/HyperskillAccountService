@@ -183,6 +183,18 @@ files:
   - name: src/account/controller/EmployeeController.java
     visible: true
     learner_created: true
+  - name: src/resources/keystore/keystore.p12
+    visible: true
+    is_binary: true
+    learner_created: true
+  - name: src/resources/keystore/read.me
+    visible: true
+    is_binary: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/16607#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Thu, 17 Oct 2024 18:34:13 UTC"
 record: -1
