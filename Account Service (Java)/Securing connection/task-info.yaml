@@ -12,6 +12,177 @@ files:
   - name: test/AccountServiceTest.java
     visible: false
     learner_created: false
+  - name: src/account/controller/SecurityController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/UserModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/SamePasswordException.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/UserDetailsServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/RoleNotFoundException.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/AuthController.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/ChangePasswordEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/SecurityEventServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/DataLoader.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/SecurityEventRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/ChangePasswordModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/Group.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/CompromisedPasswordException.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/handler/GlobalExceptionHandler.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/UpdateAccessModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/LockUserEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/SecurityEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/PaymentsServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/PaymentInModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/SecurityConfig.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UserDeletedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/RoleRemovedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/PasswordLengthException.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/RoleGrantedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/Payment.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/RestAuthenticationEntryPoint.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/AccountServiceEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/LoginAttemptServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/SecurityEventListener.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/LoginAttemptService.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/validator/RoleValidator.java
+    visible: true
+    learner_created: true
+  - name: src/resources/compromised_pwds.txt
+    visible: true
+    learner_created: true
+  - name: src/account/service/SecurityEventService.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/EventOutModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/AccountController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/UserMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/handler/CustomAccessDeniedHandler.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/User.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/EventName.java
+    visible: true
+    learner_created: true
+  - name: src/account/validation/ValidPeriod.java
+    visible: true
+    learner_created: true
+  - name: src/account/validation/PeriodValidator.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/PaymentsService.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/BruteForceEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/exception/UserExistsException.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/UserRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UnlockUserEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/SignupModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/GroupRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/AdminController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/SecurityEventMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UserCreatedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/PaymentMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/PaymentOutModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/validator/PasswordValidator.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/PaymentsRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/UpdateRoleModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/controller/EmployeeController.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/16607#comment
 status: Unchecked
 record: -1
