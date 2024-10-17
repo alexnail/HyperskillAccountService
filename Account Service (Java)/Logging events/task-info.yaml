@@ -120,6 +120,72 @@ files:
   - name: src/account/controller/EmployeeController.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/217/stages/1091/implement#comment
-status: Unchecked
+  - name: src/account/controller/SecurityController.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/EventOutModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/SecurityEventService.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/SecurityEventServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/repository/SecurityEventRepository.java
+    visible: true
+    learner_created: true
+  - name: src/account/entity/SecurityEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/mapper/SecurityEventMapper.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UserCreatedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/EventName.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/ChangePasswordEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/AccountServiceEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UserDeletedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/RoleRemovedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/RoleGrantedEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/LoginAttemptService.java
+    visible: true
+    learner_created: true
+  - name: src/account/service/LoginAttemptServiceImpl.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/BruteForceEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/model/UpdateAccessModel.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/SecurityEventListener.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/LockUserEvent.java
+    visible: true
+    learner_created: true
+  - name: src/account/security/event/UnlockUserEvent.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/16606#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 17 Oct 2024 17:48:57 UTC"
 record: -1

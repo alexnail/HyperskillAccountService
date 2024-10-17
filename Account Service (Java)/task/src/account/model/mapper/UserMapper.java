@@ -22,6 +22,7 @@ public class UserMapper {
                 .authorities(user.getGroups().stream()
                         .map(g -> new SimpleGrantedAuthority(g.getRole()))
                         .toList())
+                .nonLocked(!user.isLocked())
                 .build();
     }
 

@@ -15,6 +15,7 @@ public class UserModel implements UserDetails {
     private String username;
     private String password;
     private List<? extends GrantedAuthority> authorities;
+    private boolean nonLocked;
 
     @Override
     public String getUsername() {
@@ -38,7 +39,7 @@ public class UserModel implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return nonLocked;
     }
 
     @Override

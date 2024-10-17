@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -89,6 +90,13 @@ public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
                 getBodyMap("Access Denied!", HttpStatus.FORBIDDEN, request),
                 HttpStatus.FORBIDDEN);
     }*/
+
+    @ExceptionHandler(LockedException.class)
+    public ResponseEntity handleLocked(HttpServletRequest request, LockedException e) {
+        return new ResponseEntity<>(
+                getBodyMap("Account is locked!", HttpStatus.LOCKED, request),
+                HttpStatus.LOCKED);
+    }
 
     private static Map<String, Object> getBodyMap(String message, HttpStatus httpStatus, HttpServletRequest request) {
         Map<String, Object> body = Map.of(

@@ -30,4 +30,8 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user2group")
     private Set<Group> groups;
+
+    private int failedAttempts;
+
+    private boolean locked;
 }

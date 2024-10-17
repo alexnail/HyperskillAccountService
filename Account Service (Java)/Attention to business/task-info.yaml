@@ -96,7 +96,7 @@ files:
   - name: src/account/validation/PeriodValidator.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/217/stages/1089/implement#comment
+feedback_link: https://hyperskill.org/learn/step/16604#comment
 status: Solved
 feedback:
   message: Congratulations!

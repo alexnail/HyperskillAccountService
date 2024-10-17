@@ -16,7 +16,6 @@ public class DataLoader {
     }
 
     private void createRoles() {
-        log.info(">>> Creating roles");
         try {
             groupRepository.save(new Group("ROLE_ADMINISTRATOR"));
             groupRepository.save(new Group("ROLE_USER"));

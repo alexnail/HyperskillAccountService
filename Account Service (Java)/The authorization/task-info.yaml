@@ -120,7 +120,7 @@ files:
   - name: src/account/exception/handler/CustomAccessDeniedHandler.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/217/stages/1090/implement#comment
+feedback_link: https://hyperskill.org/learn/step/16605#comment
 status: Solved
 feedback:
   message: Congratulations!

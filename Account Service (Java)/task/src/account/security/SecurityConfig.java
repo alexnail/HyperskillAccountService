@@ -14,14 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    /*private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
-    }*/
-
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
+    public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+                          CustomAccessDeniedHandler accessDeniedHandler) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.accessDeniedHandler = accessDeniedHandler;
     }
 
@@ -29,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic(Customizer.withDefaults())
-                //.exceptionHandling(ex -> ex.authenticationEntryPoint(restAuthenticationEntryPoint)) // Handle auth errors
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(restAuthenticationEntryPoint)) // Handle auth errors
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .csrf(csrf -> csrf.disable()) // For Postman
@@ -43,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/user/**").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/api/admin/user/**").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/empl/payment").hasAnyRole("USER", "ACCOUNTANT")
+                        .requestMatchers(HttpMethod.GET, "/api/security/events/").hasAnyRole("AUDITOR")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sessions -> sessions

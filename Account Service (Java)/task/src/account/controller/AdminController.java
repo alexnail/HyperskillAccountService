@@ -1,6 +1,7 @@
 package account.controller;
 
 import account.model.SignupModel;
+import account.model.UpdateAccessModel;
 import account.model.UpdateRoleModel;
 import account.service.UserDetailsServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,10 @@ public class AdminController {
     @PutMapping("/user/role")
     SignupModel updateRole(@RequestBody UpdateRoleModel body){
         return userDetailsService.updateRole(body);
+    }
+
+    @PutMapping("/user/access")
+    Map<String, Object> updateAccess(@RequestBody UpdateAccessModel body) {
+        return userDetailsService.updateAccess(body);
     }
 }

@@ -1,6 +1,7 @@
 package account.service.validator;
 
 import account.entity.Group;
+import account.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -18,5 +19,9 @@ public class RoleValidator {
                 ||
                 (BUSINESS_ROLES.contains(group.getRole())
                 && !Collections.disjoint(ADMINISTRATIVE_ROLES, groups.stream().map(Group::getRole).toList())) ;
+    }
+
+    public boolean isAdministrator(User user) {
+        return !Collections.disjoint(ADMINISTRATIVE_ROLES, user.getGroups().stream().map(Group::getRole).toList());
     }
 }
